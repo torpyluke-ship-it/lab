@@ -1,0 +1,196 @@
+Fire up Powershell
+
+Use WSL
+
+wsl.exe --list --verbose
+wsl.exe --set-default Ubuntu
+
+To run a specific wsl distribution from within PowerShell:
+wsl.exe --distribution Ubuntu
+
+or
+
+wsl
+
+
+
+Getting started with Linux and Bash
+08/06/2025
+This tutorial will help those new to Linux to get started installing and updating packages using the Ubuntu distribution of Linux that is installed by default using WSL, as well as using some basic commands with the Bash command line.
+
+
+Installing and Updating Software
+PS C:\WINDOWS\system32> wsl
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$ sudo apt update && sudo apt upgrade
+
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+==> Checking for `sudo` access (which may request your password)...
+
+==> Next steps:
+- Run these commands in your terminal to add Homebrew to your PATH:
+    echo >> /home/luket/.bashrc
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/luket/.bashrc
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+- Install Homebrew's dependencies if you have sudo access:
+    sudo apt-get install build-essential
+
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$ echo >> /home/luket/.bashrc
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$ echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/luket/.bashrc
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$ sudo apt-get install build-essential
+[sudo] password for luket:
+
+
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$ brew install gcc
+
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$ brew install kubectl k9s
+
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$ sudo apt install tmux vim
+
+
+
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$ kubectl get pods
+No resources found in default namespace.
+
+luket@DESKTOP-0VOK0VD:/mnt/c/WINDOWS/system32$ kubectl get pods -A
+NAMESPACE     NAME                                      READY   STATUS      RESTARTS   AGE
+kube-system   coredns-64fd4b4794-2lb2v                  1/1     Running     0          156m
+kube-system   helm-install-traefik-7sfrj                0/1     Completed   1          156m
+kube-system   helm-install-traefik-crd-lljx9            0/1     Completed   0          156m
+kube-system   local-path-provisioner-774c6665dc-fhdvd   1/1     Running     0          156m
+kube-system   metrics-server-7bfffcd44-nfvfj            1/1     Running     0          156m
+kube-system   svclb-traefik-2e30fffd-xxmnf              2/2     Running     0          155m
+kube-system   traefik-c98fdf6fb-z94cc                   1/1     Running     0          155m
+
+
+
+luket@DESKTOP-0VOK0VD:~/.kube$ cat config
+apiVersion: v1
+kind: Config
+clusters:
+  - name: rancher-desktop
+    cluster:
+      server: https://127.0.0.1:6443
+      certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkekNDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdGMyVnkKZG1WeUxXTmhRREUzTmpFME1qZzNOVFF3SGhjTk1qVXhNREkxTWpFME5UVTBXaGNOTXpVeE1ESXpNakUwTlRVMApXakFqTVNFd0h3WURWUVFEREJock0zTXRjMlZ5ZG1WeUxXTmhRREUzTmpFME1qZzNOVFF3V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFRVUdrRFA3MUN3WE1jdDNVd3R2YzRjVUZrS29NblppVldPZHF3UGZaU24KdFBTRkJBYXRxbDdYM0VTVk5DbDM4RFgvT3Btc3VoRmsrYWZaQVM0RkhuSklvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVXRMS2pPT1NPNWpybzhxMDl4MlB5CkhjQklNbUl3Q2dZSUtvWkl6ajBFQXdJRFNBQXdSUUlnSlJjeWtzVnliWnRuT0U2ejQ2TUxGM0VHWmVFRk1RcmkKdktWKzg2SS9wNEFDSVFDVGNTdHpmTElKQXlJejlkQlBIemZONDNBUnBZM0IwR09oWlV0eUhHbnNYUT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+      insecure-skip-tls-verify: false
+users:
+  - name: rancher-desktop
+    user:
+      client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJrVENDQVRlZ0F3SUJBZ0lJUWgxT1ZLUzYrWGt3Q2dZSUtvWkl6ajBFQXdJd0l6RWhNQjhHQTFVRUF3d1kKYXpOekxXTnNhV1Z1ZEMxallVQXhOell4TkRJNE56VTBNQjRYRFRJMU1UQXlOVEl4TkRVMU5Gb1hEVEkyTVRBeQpOVEl4TkRVMU5Gb3dNREVYTUJVR0ExVUVDaE1PYzNsemRHVnRPbTFoYzNSbGNuTXhGVEFUQmdOVkJBTVRESE41CmMzUmxiVHBoWkcxcGJqQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJNUW9ZdEs2Wmc2NmY2cTYKcS9TZDY5cEUvZ3g1VEFob1JJWC9IZDErOFFZdWhVQTZWa09ta0xFdVN5S3BJb25UOGY1TndoM2Fkdllzb2g2SgoxVG9KV2gyalNEQkdNQTRHQTFVZER3RUIvd1FFQXdJRm9EQVRCZ05WSFNVRUREQUtCZ2dyQmdFRkJRY0RBakFmCkJnTlZIU01FR0RBV2dCUWhlMStHYWdGSEVTVXIzYjZnT1VwdXZPTksrVEFLQmdncWhrak9QUVFEQWdOSUFEQkYKQWlFQXQ5VGdMaDhsMDF6R1dEK0g3SUtrV2EyUXNyTkgrd2VSVXIrRlZaOFZYV3NDSUg2OFVJSDlERW9BTXZWcQpPS3dRZHRsNjhWdmxPWnpGdVc3UVEwOU5tNCtHCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkakNDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdFkyeHAKWlc1MExXTmhRREUzTmpFME1qZzNOVFF3SGhjTk1qVXhNREkxTWpFME5UVTBXaGNOTXpVeE1ESXpNakUwTlRVMApXakFqTVNFd0h3WURWUVFEREJock0zTXRZMnhwWlc1MExXTmhRREUzTmpFME1qZzNOVFF3V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFTOUdBUngzbnFEUTdYYnU0cEhCVEFFS3ZiK05FZGhQNGk2VFlFUWR2ZUUKeVgyVVdpK0NwcTd6R1BySlZmOWZpMU03ajBhTzFPTDN5V3NlQk1RRlJZbVpvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVUlYdGZobW9CUnhFbEs5MitvRGxLCmJyempTdmt3Q2dZSUtvWkl6ajBFQXdJRFJ3QXdSQUlnVnpYWjFObnlvejRyRDI5dmFqOGNHc3M3Ry9KRWlFOEEKZUtJSUJraGY4WGdDSUYxTkoyZzZUZWNSZDJVcGJTemIzMnJYMU14a3dHa2RRZ3NPeUFTZFRucHkKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      client-key-data: LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUhjbmN4aURxaG9PZFV4Z0w5MmM2RjFpN01DZzFaeFA2bExBWEUwZVROc2hvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFeENoaTBycG1EcnAvcXJxcjlKM3Iya1QrREhsTUNHaEVoZjhkM1g3eEJpNkZRRHBXUTZhUQpzUzVMSXFraWlkUHgvazNDSGRwMjlpeWlIb25WT2dsYUhRPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo=
+contexts:
+  - name: rancher-desktop
+    context:
+      cluster: rancher-desktop
+      name: rancher-desktop
+      user: rancher-desktop
+preferences: {}
+current-context: rancher-desktop
+luket@DESKTOP-0VOK0VD:~/.kube$ k9s
+luket@DESKTOP-0VOK0VD:~/.kube$
+
+
+
+Git repo
+---------
+luket@DESKTOP-0VOK0VD:~/Repos/lab$ git config --list
+user.name=torpyluke-ship-it
+user.email=torpyluke@gmail.com
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.url=git@github.com:torpyluke-ship-it/lab.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+branch.main.remote=origin
+branch.main.merge=refs/heads/main
+
+Make sure you can access GitHub
+luket@DESKTOP-0VOK0VD:~/.ssh$ ssh -vT git@github.com
+
+if not create the ssh key pair
+luket@DESKTOP-0VOK0VD:~/.ssh$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/luket/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/luket/.ssh/id_rsa
+Your public key has been saved in /home/luket/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:BfK25LiLaWKxgYFkDE0a2SEAWSCDx/bULUqP9+rqAyo luket@DESKTOP-0VOK0VD
+The key's randomart image is:
++---[RSA 3072]----+
+|/X+. ....        |
+|=O* o oo..       |
+|=o + + .+ .      |
+|o   + o= o       |
+| o   ...S        |
+|. +    ..        |
+| . =  ..         |
+|E + oo..         |
+|.. +=+o          |
++----[SHA256]-----+
+
+
+Add the public key to the GitHub site.
+
+
+Make sure ssh agent is running.
+luket@DESKTOP-0VOK0VD:~/.ssh$ ssh-agent -s
+SSH_AUTH_SOCK=/tmp/ssh-Wl64gWYPW5wt/agent.16633; export SSH_AUTH_SOCK;
+SSH_AGENT_PID=16634; export SSH_AGENT_PID;
+echo Agent pid 16634;
+
+luket@DESKTOP-0VOK0VD:~/.ssh$ ps -ef|grep agent
+luket      16634    2902  0 21:37 ?        00:00:00 ssh-agent -s
+luket      16908    2904  0 21:49 pts/0    00:00:00 grep --color=auto agent
+
+
+Create local directory on PC.
+
+luket@DESKTOP-0VOK0VD:~$ mkdir Repos
+luket@DESKTOP-0VOK0VD:~$ cd Repos/
+
+Clone the repo "lab" created on remote GitHub location to your PC.
+
+luket@DESKTOP-0VOK0VD:~/Repos$ git clone git@github.com:torpyluke-ship-it/lab.git
+Cloning into 'lab'...
+warning: You appear to have cloned an empty repository.
+
+luket@DESKTOP-0VOK0VD:~$ cd Repos/lab/
+
+Working area:
+
+luket@DESKTOP-0VOK0VD:~/Repos/lab$ vim test.yaml
+luket@DESKTOP-0VOK0VD:~/Repos/lab$ ls -alrt
+total 16
+drwxr-xr-x 3 luket luket 4096 Oct 25 21:51 ..
+drwxr-xr-x 7 luket luket 4096 Oct 25 21:51 .git
+-rw-r--r-- 1 luket luket   22 Oct 25 22:00 test.yaml
+drwxr-xr-x 3 luket luket 4096 Oct 25 22:00 .
+
+Staging area:
+
+luket@DESKTOP-0VOK0VD:~/Repos/lab$ git add .
+
+luket@DESKTOP-0VOK0VD:~/Repos/lab$ git commit -m "testing"
+[main (root-commit) 9969032] testing
+ 1 file changed, 1 insertion(+)
+ create mode 100644 test.yaml
+
+
+Remote location:
+luket@DESKTOP-0VOK0VD:~/Repos/lab$ git push
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 232 bytes | 116.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To github.com:torpyluke-ship-it/lab.git
+ * [new branch]      main -> main
+
+luket@DESKTOP-0VOK0VD:~/Repos/lab$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
